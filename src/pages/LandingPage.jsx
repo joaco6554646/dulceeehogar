@@ -26,7 +26,8 @@ const LandingPage = () => {
             </header>
 
             {/* -------------------- 2. SECCIÓN DE PRODUCTOS Y ADMIN -------------------- */}
-            <section className="py-20 text-center">
+            {/* NO se necesita corrección aquí, ya que el contenido es fluido y centrado */}
+            <section className="py-20 text-center px-4 md:px-8">
                 <h2 className="text-3xl md:text-4xl font-serif font-bold text-amber-900 mb-4">
                     Descubre Nuestros Productos Artesanales
                 </h2>
@@ -51,7 +52,8 @@ const LandingPage = () => {
             
             {/* -------------------- 3. COMPROMISO CON LA CALIDAD -------------------- */}
             <section className="bg-amber-200/40 py-16 text-center">
-                <div className="max-w-4xl mx-auto px-4">
+                {/* 🟢 CORRECCIÓN CLAVE: max-w-4xl se va para móvil, pero se aplica en md: */}
+                <div className="w-full md:max-w-4xl md:mx-auto px-4"> 
                     <h3 className="text-3xl font-serif font-bold text-amber-900 mb-4 flex items-center justify-center">
                         <StarIcon className="w-8 h-8 mr-3 text-yellow-600" />
                         Compromiso con la Calidad
