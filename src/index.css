@@ -1,3 +1,17 @@
+/* 🛑 RESET DE ESTILOS DE NAVEGADOR */
+body {
+  margin: 0;
+  padding: 0;
+  /* Asegura que no haya scroll horizontal no deseado */
+  overflow-x: hidden; 
+}
+
+/* Opcional: Para asegurar que la caja mida el ancho y alto del contenido */
+html {
+  box-sizing: border-box;
+}
+
+/* Agrega esto si usas Tailwind CSS para forzar la reseteo en todos los elementos */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
