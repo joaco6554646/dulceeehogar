@@ -84,22 +84,27 @@ const App = () => {
 
     return (
         <Router>
-            {/* 🛑 PUNTO CRÍTICO: Envuelve toda la app con el proveedor de Firebase 
-                y le pasa las instancias una sola vez. */}
             <FirebaseProvider db={db} appId={appId} auth={auth}>
 
-                {/* 🛑 CartProvider ya NO necesita props de Firebase, los obtiene con useFirebase. */}
                 <CartProvider>
                     
-                    <div className="flex flex-col min-h-screen">
+                    <div className="flex flex-col min-h-screen bg-gray-50"> {/* Añadido bg-gray-50 aquí para el fondo */}
                         
                         <Navbar />
                         
-                        <main className="flex-grow pt-16">
+                        {/* 🟢 CORRECCIÓN: Aplicamos w-full, md:max-w-6xl y md:mx-auto al main */}
+                        <main className="
+                            flex-grow 
+                            pt-16 
+                            w-full           /* Ancho completo en móvil */
+                            px-4             /* Padding horizontal en móvil */
+                            md:max-w-7xl     /* Ancho máximo en escritorio */
+                            md:mx-auto       /* Centrado automático en escritorio */
+                            md:px-8          /* Más padding en escritorio */
+                        ">
                             <Routes>
                                 <Route path="/" element={<LandingPage />} />
                                 
-                                {/* 🛑 ProductList ya NO necesita db/appId como props */}
                                 <Route path="/products" element={<ProductList />} /> 
                                 
                                 <Route path="/cart" element={<CartPage />} />
@@ -110,7 +115,6 @@ const App = () => {
                                     <AdminWrapper><AdminDashboard /></AdminWrapper>
                                 } />
                                 
-                                {/* 🛑 AdminProducts ya NO necesita db/appId como props */}
                                 <Route path="/admin/products" element={
                                     <AdminWrapper><AdminProducts /></AdminWrapper>
                                 } />
