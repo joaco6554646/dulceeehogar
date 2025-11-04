@@ -141,13 +141,15 @@ const CartPage = () => {
     // ... (Fin de manejo de estados) ...
 
     return (
-        <div className="max-w-7xl mx-auto p-4 sm:px-6 lg:px-8 py-10 bg-white min-h-screen">
+        // 🟢 SIMPLIFICACIÓN: Retiramos el padding complejo y confiamos en el padding del main en App.jsx
+        // Usamos un padding interno básico p-4
+        <div className="max-w-7xl mx-auto p-4 py-10 bg-white min-h-screen">
             <h1 className="text-4xl font-extrabold text-amber-900 mb-8 border-b pb-4">Tu Carrito de Compras</h1>
 
             {/* Mensaje de Pago/Alias */}
             {checkoutMessage && (
                 // Cambié el color a azul si no es un mensaje de éxito/error.
-                <div className={`bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-xl relative mb-6`} role="alert">
+                <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-xl relative mb-6" role="alert">
                     <p className="font-bold">Información de Pago</p>
                     <p className="text-sm">{checkoutMessage}</p>
                 </div>
@@ -155,35 +157,51 @@ const CartPage = () => {
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-                {/* Columna de Artículos del Carrito (2/3) - Sin cambios en esta sección */}
+                {/* Columna de Artículos del Carrito (2/3) */}
                 <div className="lg:col-span-2 space-y-6">
                     {cartItems.map((item) => (
-                        <div key={item.id} className="flex items-center bg-gray-50 p-4 rounded-xl shadow-md transition duration-150 hover:shadow-lg">
-                            {/* ... (Detalles del Producto y controles de cantidad) ... */}
-                            <img
-                                src={`https://placehold.co/80x80/ffe0b2/9c27b0?text=${item.name.slice(0, 1)}`}
-                                alt={item.name}
-                                className="w-20 h-20 object-cover rounded-lg mr-4 border border-amber-200"
-                            />
-                            <div className="flex-grow">
-                                <p className="text-lg font-bold text-gray-800">{item.name}</p>
-                                <p className="text-sm text-gray-500">{item.description}</p>
-                                <p className="text-md font-semibold text-red-600 mt-1">${item.price.toFixed(2)} c/u</p>
+                        // 🟢 CORRECCIÓN CLAVE: Usamos flex-wrap para permitir el apilamiento vertical en móvil (flex-wrap)
+                        // y justificamos el contenido (justify-between) para que ocupe todo el ancho.
+                        <div 
+                            key={item.id} 
+                            className="flex flex-wrap md:flex-nowrap items-center justify-between bg-gray-50 p-4 rounded-xl shadow-md transition duration-150 hover:shadow-lg"
+                        >
+                            
+                            {/* Bloque 1: Imagen y Detalles (W-full en móvil, flex-grow en desktop) */}
+                            <div className="flex w-full md:w-auto items-start md:flex-grow mb-4 md:mb-0">
+                                <img
+                                    src={`https://placehold.co/80x80/ffe0b2/9c27b0?text=${item.name.slice(0, 1)}`}
+                                    alt={item.name}
+                                    className="w-20 h-20 object-cover rounded-lg mr-4 border border-amber-200 flex-shrink-0"
+                                />
+                                <div className="flex-grow min-w-0"> {/* min-w-0 evita overflow de texto largo */}
+                                    <p className="text-lg font-bold text-gray-800">{item.name}</p>
+                                    <p className="text-sm text-gray-500 truncate">{item.description}</p>
+                                    <p className="text-md font-semibold text-red-600 mt-1">${item.price.toFixed(2)} c/u</p>
+                                </div>
                             </div>
-                            <div className="flex items-center space-x-2 mr-4">
-                                <button onClick={() => updateItemQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1} className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full disabled:opacity-50 transition">-</button>
-                                <span className="text-lg font-medium w-6 text-center">{item.quantity}</span>
-                                <button onClick={() => updateItemQuantity(item.id, item.quantity + 1)} className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-1 px-3 rounded-full transition">+</button>
-                            </div>
-                            <div className="text-right">
-                                <p className="text-xl font-extrabold text-amber-900">${(item.price * item.quantity).toFixed(2)}</p>
-                                <button onClick={() => removeItemFromCart(item.id)} className="text-red-500 hover:text-red-700 text-sm mt-1 transition">Eliminar</button>
+                            
+                            {/* Bloque 2: Controles y Subtotal (W-full en móvil, se alinea al final) */}
+                            <div className="flex w-full md:w-auto mt-2 md:mt-0 items-center justify-between md:space-x-4">
+                                
+                                {/* Controles de Cantidad */}
+                                <div className="flex items-center space-x-2">
+                                    <button onClick={() => updateItemQuantity(item.id, item.quantity - 1)} disabled={item.quantity <= 1} className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-1 px-3 rounded-full disabled:opacity-50 transition">-</button>
+                                    <span className="text-lg font-medium w-6 text-center">{item.quantity}</span>
+                                    <button onClick={() => updateItemQuantity(item.id, item.quantity + 1)} className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-1 px-3 rounded-full transition">+</button>
+                                </div>
+
+                                {/* Total por Artículo y Eliminar */}
+                                <div className="text-right">
+                                    <p className="text-xl font-extrabold text-amber-900">${(item.price * item.quantity).toFixed(2)}</p>
+                                    <button onClick={() => removeItemFromCart(item.id)} className="text-red-500 hover:text-red-700 text-sm mt-1 transition">Eliminar</button>
+                                </div>
                             </div>
                         </div>
                     ))}
                 </div>
 
-                {/* Columna de Resumen del Pago (1/3) */}
+                {/* Columna de Resumen del Pago (1/3) - No necesita cambios */}
                 <div className="lg:col-span-1 bg-gray-50 p-6 rounded-2xl shadow-xl sticky top-20 h-fit">
                     <h2 className="text-2xl font-bold text-amber-900 mb-4 border-b pb-3">Resumen del Pedido</h2>
                     
@@ -238,9 +256,9 @@ const CartPage = () => {
                     </button>
 
                     {cartItems.length === 0 && (
-                               <p className="text-sm text-red-500 mt-2 text-center">
-                                    Añade productos para pagar.
-                               </p>
+                                   <p className="text-sm text-red-500 mt-2 text-center">
+                                         Añade productos para pagar.
+                                   </p>
                     )}
                 </div>
             </div>
