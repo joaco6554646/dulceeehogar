@@ -1,17 +1,13 @@
-/* 🛑 RESET DE ESTILOS DE NAVEGADOR */
-body {
-  margin: 0;
-  padding: 0;
-  /* Asegura que no haya scroll horizontal no deseado */
-  overflow-x: hidden; 
+/* 🛑 SOLUCIÓN DEFINITIVA DE OVERFLOW */
+html, body {
+  margin: 0 !important;           /* Asegura que no haya margen del navegador */
+  padding: 0 !important;          /* Asegura que no haya padding del navegador */
+  overflow-x: hidden !important;  /* FUERZA LA DESAPARICIÓN DEL SCROLL HORIZONTAL */
+  width: 100vw !important;        /* FUERZA EL ANCHO A SER EL 100% DE LA VENTANA VISIBLE */
+  box-sizing: border-box;         /* Asegura que padding y border no aumenten el ancho */
 }
 
-/* Opcional: Para asegurar que la caja mida el ancho y alto del contenido */
-html {
-  box-sizing: border-box;
-}
-
-/* Agrega esto si usas Tailwind CSS para forzar la reseteo en todos los elementos */
+/* Base de estilos global */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
