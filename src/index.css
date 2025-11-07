@@ -1,10 +1,15 @@
 /* 🛑 SOLUCIÓN DEFINITIVA DE OVERFLOW */
 html, body {
-  margin: 0 !important;           /* Asegura que no haya margen del navegador */
-  padding: 0 !important;          /* Asegura que no haya padding del navegador */
-  overflow-x: hidden !important;  /* FUERZA LA DESAPARICIÓN DEL SCROLL HORIZONTAL */
-  width: 100vw !important;        /* FUERZA EL ANCHO A SER EL 100% DE LA VENTANA VISIBLE */
-  box-sizing: border-box;         /* Asegura que padding y border no aumenten el ancho */
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;  /* Oculta el scroll horizontal */
+  width: 100vw !important;        /* Fuerza el ancho al 100% de la ventana visible */
+  box-sizing: border-box;
+}
+
+/* 🟢 NUEVA REGLA: FUERZA A TODOS LOS ELEMENTOS PRINCIPALES A NO DESBORDAR */
+body > * {
+  max-width: 100% !important;
 }
 
 /* Base de estilos global */
