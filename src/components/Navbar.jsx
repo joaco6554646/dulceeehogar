@@ -1,13 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-// Se mantiene sin extensión para la mejor resolución de useCart
 import { useCart } from '../hooks/useCart'; 
 
-// Importación agrupada (usando la versión solid para evitar errores de Vite)
+// Importación agrupada
 import { ShoppingBagIcon, UserIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 
 const Navbar = () => {
     const { totals, user, signOut } = useCart();
+    // totalItems es 0 por defecto si no hay carrito
     const totalItems = totals?.totalItems || 0; 
 
     const handleLogout = (e) => {
@@ -17,9 +17,9 @@ const Navbar = () => {
 
     return (
         <nav className="bg-amber-100 shadow-lg sticky top-0 z-50">
-            {/* 🟢 CORRECCIÓN CLAVE: Eliminamos max-w-7xl y mx-auto aquí. 
-                Usamos w-full para asegurar que ocupe todo el ancho. */}
+            {/* Contenedor principal para W-FULL y Padding */}
             <div className="w-full px-4 sm:px-6 lg:px-8"> 
+                {/* Contenido centrado y flexible */}
                 <div className="flex justify-between items-center h-16 max-w-7xl mx-auto">
                     
                     {/* Logo / Título */}
@@ -30,14 +30,15 @@ const Navbar = () => {
                         </span>
                     </NavLink>
 
-                    {/* Enlaces de Navegación Central (INICIO y PRODUCTOS) */}
-                    <div className="flex items-center space-x-4">
+                    {/* Enlaces de Navegación Central (COMPACTADO EN MÓVIL) */}
+                    {/* Se usa space-x-2 en móvil y space-x-4 en escritorio */}
+                    <div className="flex items-center space-x-2 sm:space-x-4">
                         
-                        {/* 🟢 ENLACE INICIO */}
+                        {/* 🟢 ENLACE INICIO: mx-1 en móvil, mx-4 en escritorio */}
                         <NavLink 
                             to="/" 
                             className={({ isActive }) => 
-                                `text-amber-800 font-semibold hover:text-amber-900 mx-4 transition-colors ${
+                                `text-amber-800 font-semibold hover:text-amber-900 mx-1 md:mx-4 transition-colors ${
                                     isActive ? 'border-b-2 border-amber-800 pb-1' : ''
                                 }`
                             }
@@ -45,11 +46,11 @@ const Navbar = () => {
                             INICIO
                         </NavLink>
                         
-                        {/* 🟢 ENLACE PRODUCTOS */}
+                        {/* 🟢 ENLACE PRODUCTOS: mx-1 en móvil, mx-4 en escritorio */}
                         <NavLink 
                             to="/products" 
                             className={({ isActive }) => 
-                                `text-amber-800 font-semibold hover:text-amber-900 mx-4 transition-colors ${
+                                `text-amber-800 font-semibold hover:text-amber-900 mx-1 md:mx-4 transition-colors ${
                                     isActive ? 'border-b-2 border-amber-800 pb-1' : ''
                                 }`
                             }
@@ -57,12 +58,12 @@ const Navbar = () => {
                             PRODUCTOS
                         </NavLink>
                         
-                        {/* Enlace al Dashboard de Admin si el usuario está logueado */}
+                        {/* 🟢 ENLACE ADMIN: mx-1 en móvil, mx-4 en escritorio */}
                         {user && (
                             <NavLink 
                                 to="/admin" 
                                 className={({ isActive }) => 
-                                    `text-amber-800 font-semibold hover:text-amber-900 mx-4 transition-colors ${
+                                    `text-amber-800 font-semibold hover:text-amber-900 mx-1 md:mx-4 transition-colors ${
                                         isActive ? 'border-b-2 border-amber-800 pb-1' : ''
                                     }`
                                 }
@@ -72,12 +73,12 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    {/* Íconos de Usuario y Carrito */}
-                    <div className="flex items-center space-x-4">
+                    {/* Íconos de Usuario y Carrito (COMPACTADO EN MÓVIL) */}
+                    {/* Se usa space-x-2 en móvil y space-x-4 en escritorio */}
+                    <div className="flex items-center space-x-2 sm:space-x-4">
                         
-                        {/* Icono de Carrito */}
-                        <NavLink to="/cart" className="p-2 relative rounded-full hover:bg-amber-200 transition-colors">
-                            {/* Usamos ShoppingBagIcon */}
+                        {/* 🟢 Icono de Carrito: Usamos p-1 en móvil, p-2 en escritorio */}
+                        <NavLink to="/cart" className="p-1 sm:p-2 relative rounded-full hover:bg-amber-200 transition-colors">
                             <ShoppingBagIcon className="h-6 w-6 text-amber-800" />
                             {totalItems > 0 && (
                                 <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
@@ -86,21 +87,20 @@ const Navbar = () => {
                             )}
                         </NavLink>
 
-                        {/* Icono de Usuario / Login / Logout */}
+                        {/* 🟢 Icono de Usuario / Login / Logout: Usamos p-1 en móvil, p-2 en escritorio */}
                         {user ? (
                             <button 
                                 onClick={handleLogout} 
-                                className="p-2 rounded-full hover:bg-amber-200 transition-colors group"
+                                className="p-1 sm:p-2 rounded-full hover:bg-amber-200 transition-colors group"
                                 title="Cerrar Sesión"
                             >
                                 <ArrowRightOnRectangleIcon className="h-6 w-6 text-amber-800 group-hover:text-amber-900" />
                             </button>
                         ) : (
-                            <NavLink to="/admin-login" className="p-2 rounded-full hover:bg-amber-200 transition-colors">
+                            <NavLink to="/admin-login" className="p-1 sm:p-2 rounded-full hover:bg-amber-200 transition-colors">
                                 <UserIcon className="h-6 w-6 text-amber-800" />
                             </NavLink>
                         )}
-
                     </div>
                 </div>
             </div>
