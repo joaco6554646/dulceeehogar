@@ -7,7 +7,6 @@ import { useCart } from '../hooks/useCart';
 import { ShoppingBagIcon, UserIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/solid';
 
 const Navbar = () => {
-    // AVISO: El ícono ShoppingBag se llama ShoppingBagIcon en la versión Solid.
     const { totals, user, signOut } = useCart();
     const totalItems = totals?.totalItems || 0; 
 
@@ -18,8 +17,10 @@ const Navbar = () => {
 
     return (
         <nav className="bg-amber-100 shadow-lg sticky top-0 z-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-16">
+            {/* 🟢 CORRECCIÓN CLAVE: Eliminamos max-w-7xl y mx-auto aquí. 
+                Usamos w-full para asegurar que ocupe todo el ancho. */}
+            <div className="w-full px-4 sm:px-6 lg:px-8"> 
+                <div className="flex justify-between items-center h-16 max-w-7xl mx-auto">
                     
                     {/* Logo / Título */}
                     <NavLink to="/" className="flex-shrink-0 flex items-center">
